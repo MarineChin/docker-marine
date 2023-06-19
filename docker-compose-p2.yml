@@ -10,8 +10,8 @@ services:
       - 27017:27017
     restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=marichubi2
-      - MONGO_INITDB_ROOT_PASSWORD=unodostres
+       MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     command: ['--auth']
 
   dbmanager: 
@@ -22,9 +22,9 @@ services:
     ports:
       - 8081:8081
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=marichubi2
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=unodostres
-      - ME_CONFIG_MONGODB_SERVER=database
+    - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_PASSWORD}
+      - ME_CONFIG_MONGODB_SERVER=${MONGO_DB_NAME}
     restart: always
 
 volumes:
