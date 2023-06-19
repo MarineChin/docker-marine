@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  database:
+    container_name: mongodb-container
+    image: mongo:6.0.6
+    volumes:
+      - mongodb-volume:/data/db
+    ports:
+      - 27017:27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=marichubi2
+      - MONGO_INITDB_ROOT_PASSWORD=unodostres
+    command: ['--auth']
+
+  dbmanager: 
+    depends_on:
+      - database
+    container_name: mongoExpress
+    image: mongo-express:1.0.0-alpha.4
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=marichubi2
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=unodostres
+      - ME_CONFIG_MONGODB_SERVER=database
+    restart: always
+
+volumes:
+  mongodb-volume:
+    external: false
